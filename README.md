@@ -2,7 +2,7 @@
 
 > [Leviaria] The nostalgia is crying for me to come back, so now it's time to unpack the childhood memories and finally bring them to a standard where you can come back in 10 years. <br/>
 > <br/>
-> Most gamemodes are designed have fun with multiple players, but my main focus is that you have to spend some time with your own character before you can deal with the others.
+> Most gamemodes are designed to have fun with multiple players, but my main focus is that you have to spend some time with your own character before you can deal with the others.
 
 ## Plugins
 
