@@ -8,6 +8,7 @@
 //               BUILD: 1.00.1-B0.1-ALPHA
 
 #include <a_samp> /* samp-stdlib */
+#include <a_mysql> /* MySQL plugin for SA:MP. */
 
 // YSI Implementation v5.06.1932
 
@@ -26,6 +27,29 @@ which are functions you can start, stop, and call on a delay at will.
 #include <YSI_CODING\y_timers>
 
 /*
+MAX_PLAYERS is a value which defines the number of players that can join the server. It is separate from the 'maxplayers' server variable.
+By default, in a_samp.inc, this value is 500 (or 800/1000 depending on the server package).
+If one is only running a server with maxplayers set to 100, MAX_PLAYERS will still be 500 - 400 more than you need.
+To fix this, simply re-define MAX_PLAYERS directly under the inclusion of a_samp:
+*/
+
+#undef MAX_PLAYERS
+const MAX_PLAYERS = 200;
+
+#define func:%0(%1) forward%0(%1); public%0(%1)
+
+/*
+Setup the Parameters to connect to a MySQL server and database using a defines where all connection credentials and options are specified.
+*/
+
+#define MYSQL_Host "localhost"
+#define MYSQL_User "root"
+#define MYSQL_PW "demo"
+#define MYSQL_DB "demo"
+
+new MySQL:SQL, yQuery[500], yString[500];
+
+/*
 The next part has two sides of a function call. main() is a function which you write the code for and is called from elsewhere,
 print(string[]) is a function with the code elsewhere which you call.
 Currently all this will do is load, print a string (i.e. print "Hello World!" (without the ""s) (a tradition in all scripting languages)) to the server console and end.
@@ -36,10 +60,20 @@ main()
 
 }
 
-public OnGameModeInit() /* This callback is triggered when the gamemode starts. */
-{
+func: OnGameModeInit() { /* This callback is triggered when the gamemode starts. */
+
+	/* Connects to the Database */
+
+	SQL = mysql_connect(MYSQL_Host, MYSQL_User, MYSQL_PW, MYSQL_DB);
+
+	if (mysql_errno() != 0) {
+		print("* [MYSQL] It is not possible to connect to the database.");
+		return 0;
+	}
+	else print("* [MYSQL] The connection to the database is successful. ");
+
 	SetGameModeText("openrp"); /* Set the name of the game mode, which appears in the server browser. */
-	AddPlayerClass(127, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0); /* Adds a class to class selection. Classes are used so players may spawn with a skin of their choice. */
+
 	return 1;
 }
 
