@@ -82,7 +82,7 @@ openrp: OnGameModeExit() /* This callback is called when a gamemode ends, either
 	return 1;
 }
 
-openrp: OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
+openrp: OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) { /* This callback is called when a player responds to a dialog shown using ShowPlayerDialog by either clicking a button, pressing ENTER/ESC or double-clicking a list item (if using a list style dialog). */
 
 if (dialogid==777) {
     new string[32];
@@ -113,7 +113,7 @@ stock ShowCaptcha(playerid) { /* Display the Captcha */
     return 1;
 }
 
-stock RandomString() {
+stock RandomString() { /* Creates a Random String for Captcha */
     new string[8];
     format(string, 8, "%c%c%i%c", 65+random(26), 65+random(26), 100+random(899), 65+random(26));
     return string;
