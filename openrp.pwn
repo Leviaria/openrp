@@ -104,7 +104,7 @@ openrp: OnPlayerRequestClass(playerid, classid) /* This callback is called when 
 	return 1;
 }
 
-stock ShowCaptcha(playerid) {
+stock ShowCaptcha(playerid) { /* Display the Captcha */
     new string[64];
     format(string, 64, "%s", RandomString());
     SetPVarString(playerid, "Captcha", string);
