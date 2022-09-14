@@ -36,7 +36,7 @@ To fix this, simply re-define MAX_PLAYERS directly under the inclusion of a_samp
 #undef MAX_PLAYERS
 const MAX_PLAYERS = 200;
 
-#define func:%0(%1) forward%0(%1); public%0(%1)
+#define openrp:%0(%1) forward%0(%1); public%0(%1)
 
 /*
 Setup the Parameters to connect to a MySQL server and database using a defines where all connection credentials and options are specified.
@@ -60,7 +60,7 @@ main()
 
 }
 
-func: OnGameModeInit() { /* This callback is triggered when the gamemode starts. */
+openrp: OnGameModeInit() { /* This callback is triggered when the gamemode starts. */
 
 	/* Connects to the Database */
 
@@ -77,15 +77,44 @@ func: OnGameModeInit() { /* This callback is triggered when the gamemode starts.
 	return 1;
 }
 
-public OnGameModeExit() /* This callback is called when a gamemode ends, either through 'gmx', the server being shut down, or GameModeExit. */
+openrp: OnGameModeExit() /* This callback is called when a gamemode ends, either through 'gmx', the server being shut down, or GameModeExit. */
 {
 	return 1;
 }
 
-public OnPlayerRequestClass(playerid, classid) /* This callback is called when a player changes class at class selection (and when class selection first appears). */
+openrp: OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
+
+if (dialogid==777) {
+    new string[32];
+    if (!response || strlen(inputtext) < 6)
+        return ShowCaptcha(playerid);
+   	GetPVarString(playerid, "Captcha", string, 32);
+   	if(strcmp(string, inputtext, true) != 0)
+        	return SendClientMessage(playerid, 0xFFFA00FF, "The Verification Code you entered is incorrect. Please try again."), ShowCaptcha(playerid);
+    	}
+	return 1;
+}
+
+
+openrp: OnPlayerRequestClass(playerid, classid) /* This callback is called when a player changes class at class selection (and when class selection first appears). */
 {
 	SetPlayerPos(playerid, 1958.3783, 1343.1572, 15.3746); /* Set a player's position. */
 	SetPlayerCameraPos(playerid, 1958.3783, 1343.1572, 15.3746); /* Sets the camera to a specific position for a player. */
 	SetPlayerCameraLookAt(playerid, 1958.3783, 1343.1572, 15.3746); /* Set the direction a player's camera looks at. Generally meant to be used in combination with SetPlayerCameraPos. */
 	return 1;
+}
+
+stock ShowCaptcha(playerid) {
+    new string[64];
+    format(string, 64, "%s", RandomString());
+    SetPVarString(playerid, "Captcha", string);
+    format(string, 64, "Enter the captcha below:\n{FFA000}%s", string);
+    ShowPlayerDialog(playerid, 777, 1, "\tSecurity Clearance", string, "Continue", "");
+    return 1;
+}
+
+stock RandomString() {
+    new string[8];
+    format(string, 8, "%c%c%i%c", 65+random(26), 65+random(26), 100+random(899), 65+random(26));
+    return string;
 }
