@@ -16,6 +16,13 @@
 [PlGh]: <https://github.com/samp-incognito/samp-streamer-plugin/blob/master/README.md>
 [MlGI]: <https://github.com/pawn-lang/YSI-Includes/blob/5.x/readme.md>
 
-## Features
+## SS Features
 
-- ✨ Unique features will be added shortly.
+- ✨ MySQL Implementation 
+- ✨ YSI Implementation
+- ✨ Unique Captcha System
+- ✨ Comming soon...
+
+## CS Features
+
+- ✨ Comming soon...
